@@ -10,7 +10,7 @@ def aff_life(country: str):
 
     data = load('life_expectancy_years.csv')
     print(data)
-    
+
     data = data.transpose()
     print(data)
 

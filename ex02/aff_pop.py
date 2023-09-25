@@ -1,46 +1,50 @@
-import matplotlib.pyplot as plt
-import pandas as pd
-import numpy as np
 from load_csv import load
+import matplotlib.pyplot as plt
+import numpy as np
 
 
-def convert_to_numeric(value_str):
-    # Define a dictionary to map prefix multipliers to their values
-    multipliers = {'k': 1e3, 'm': 1e6}
-
-    # Extract the numeric part of the string
-    numeric_part = float(value_str.rstrip('kmKM'))
-
-    # Get the last character to determine the multiplier
-    multiplier = value_str[-1].lower()
-
-    # Multiply the numeric part by the multiplier's value
-    return numeric_part * multipliers.get(multiplier, 1)
-
-def aff_pop(country: str):
-    """
-    Plots the population of a given country.
-    """
-    data = load('population_total.csv')
-    data = data.transpose()
-    df = pd.DataFrame(data)
-    print(df)
-    input()
-
-    # Apply the conversion function to the DataFrame column
-    df[country] = df[country].apply(convert_to_numeric)
-
-    # Print the updated DataFrame
-    print(df)
-
-    # plt.plot(data[country])
-    plt.plot(data[country])
-    print(data)
-    plt.xlabel('Year')
-    plt.ylabel('Population')
-    plt.xticks(np.arange(0, 301, 40))
-    plt.title(f'{country} Population Projections')
-    plt.show()
+def getvalue(string: str) -> int:
+    """get value from string"""
+    value = 1
+    if string[-1] == "M":
+        value = 1000000
+    elif string[-1] == "k":
+        value = 1000
+    else:
+        return float(string)
+    return float(string[:-1]) * value
 
 
-aff_pop("Malaysia")
+def main():
+    """main function to compare population of two countries"""
+    try:
+        data = load("population_total.csv")
+        if data is None:
+            return
+        country1 = "Malaysia"
+        country2 = "Belgium"
+        data = data.transpose()
+        years = np.array(data.index.astype(int))
+        country1_data = data[country1].values
+        country1_data = [getvalue(i) for i in country1_data]
+        country2_data = data[country2].values
+        country2_data = [getvalue(i) for i in country2_data]
+
+        plt.plot(years, country1_data, color="green", label=country1)
+        plt.plot(years, country2_data, color="blue", label=country2)
+        plt.xlabel("Year")
+        plt.ylabel("Population")
+        plt.yticks(range(20000000, 80000000, 20000000), ["20M", "40M", "60M"])
+        # plt.xticks(np.arange(0, 301, 40))
+        plt.xticks(range(1800, 2081, 40))
+        plt.title("Population Projects")
+        plt.legend(loc="lower right")
+        plt.show()
+    except Exception as e:
+        print("Exception Error", e)
+    except KeyboardInterrupt:
+        print("\rInterrupted signal")
+
+
+if __name__ == "__main__":
+    main()
