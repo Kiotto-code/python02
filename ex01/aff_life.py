@@ -12,11 +12,11 @@ def aff_life(country: str):
     print(data)
 
     data = data.transpose()
-    print(data)
 
     plt.plot(data[country])
     plt.xlabel('Year')
     plt.ylabel('Life Expectancy')
+    print("check data[country].shape", data[country].shape)
     plt.xticks(np.arange(0, 301, 40))
     # plt.xticks(range(1800, 2081, 40))
     plt.title(f'{country} Life Expectancy Projections')
