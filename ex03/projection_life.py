@@ -21,8 +21,8 @@ def scatter(year: str):
         plt.xscale("log")
         plt.xticks([300, 1000, 10000], ["300", "1k", "10k"])
 
-        plt.show()
         plt.savefig("1900.jpg")
+        plt.show()
     except Exception as err:
         print(err)
         return
