@@ -7,6 +7,7 @@ def load(path: str):
     """
     try:
         # data = pd.read_csv(path)
+        # data = pd.read_csv(path)
         data = pd.read_csv(path, index_col=0)
         print(f"Loading dataset of dimensions {data.shape}")
         return data

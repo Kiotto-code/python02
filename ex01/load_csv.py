@@ -7,8 +7,6 @@ def load(path: str):
     """
     try:
         data = pd.read_csv(path, index_col=0)
-        # data = pd.read_csv(path)
-        # data.set_index('country', inplace=True)
         print(f"Loading dataset of dimensions {data.shape}")
         return data
     except Exception as err:

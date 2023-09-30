@@ -1,5 +1,5 @@
 from load_csv import load
-import pandas as pd
+# import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
@@ -32,23 +32,16 @@ def format_tick_with_units(value, pos):
 def main():
     """main function to compare population of two countries"""
     try:
-        data = pd.read_csv("population_total.csv")
-        print(data)
-        if data is None:
-            return
         table = load("population_total.csv")
+        table = table.loc[:, "1800":"2050"]
+
         country1 = "Malaysia"
         country2 = "Japan"
-        print(table)
         data = table.transpose()
-        print(data)
-        # print(data[country1])
+        # data = data[:data.index.get_loc("2050") + 1]
+
         years = np.array(data.index.astype(int))
         country1_data = data[country1].values
-
-        print(data[country1], "\n")
-        print(data[country1].values)
-
         country1_data = [getvalue(i) for i in country1_data]
         country2_data = data[country2].values
         country2_data = [getvalue(i) for i in country2_data]
@@ -57,14 +50,9 @@ def main():
         plt.plot(years, country2_data, color="blue", label=country2)
         plt.xlabel("Year")
         plt.ylabel("Population")
-        # ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-        # plt.yticks(np.arange(20000000, y_shape, 20000000))
         plt.gca().yaxis.set_major_formatter(FuncFormatter
                                             (format_tick_with_units))
-        # plt.yticks(range(20000000, 80000000, 20000000), \
-        #   ["20M", "40M", "60M"])
-        # plt.xticks(np.arange(0, 301, 40))
-        plt.xticks(range(1800, 2081, 40))
+        plt.xticks(range(1800, 2041, 40))
         plt.title("Population Projects")
         plt.legend(loc="lower right")
         plt.show()

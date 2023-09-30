@@ -29,6 +29,7 @@ def scatter(year: str):
 
 
 def main():
+    """main function"""
     scatter("1900")
 
 

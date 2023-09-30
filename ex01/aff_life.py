@@ -12,6 +12,7 @@ def aff_life(country: str):
     print(data)
 
     data = data.transpose()
+    print(data)
 
     plt.plot(data[country])
     plt.xlabel('Year')
@@ -25,7 +26,13 @@ def aff_life(country: str):
 
 
 def main():
-    aff_life("Malaysia")
+    """main"""
+    try:
+        aff_life("Malaysia")
+    except Exception as e:
+        print("Exception Error", e)
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt")
 
 
 if __name__ == "__main__":
